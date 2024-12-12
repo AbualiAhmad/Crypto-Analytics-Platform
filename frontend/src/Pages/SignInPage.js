@@ -53,12 +53,11 @@ const SignIn = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { user_id, setUserId } = CryptoState();
-  const API = "https://crypto-metrics-backend.onrender.com"
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post(`${API}/signin`, { username, password });
+      const response = await axios.post('http://localhost:5000/signin', { username, password });
       console.log(response.data);
       localStorage.setItem('userId', response.data.id);
       setUserId(response.data.id);

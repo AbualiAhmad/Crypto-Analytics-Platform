@@ -8,9 +8,6 @@ import { SingleCoin } from "../config/api";
 import { numberWithCommas } from "../components/CoinsTable";
 import { CryptoState } from "../CryptoContext";
 import 'chart.js/auto'
-//import { Chart as ChartJS, BarElement, Tooltip, Legend, CategoryScale, LinearScale} from "chart.js"
-
-//ChartJS.register(BarElement, Tooltip, Legend, CategoryScale, LinearScale);
 const CoinPage = () => {
   const { id } = useParams();
   const [coin, setCoin] = useState();

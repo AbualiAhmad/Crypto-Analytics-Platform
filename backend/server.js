@@ -6,15 +6,14 @@ const app = express();
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 const cors = require("cors");
-const port = process.env.PORT || 5000;
+const port = 5000;
+const hostname = "localhost";
 app.use(express.json());
 const corsOptions = {
-  origin: "https://crypto-metrics-web.netlify.app", 
-  credentials: true,
-  optionSuccessStatus: 200
+    origin:'http://localhost:3000', 
+    credentials:true,
+    optionSuccessStatus:200
 }
-app.use(cors(corsOptions));
-
 
 app.use(cors(corsOptions));
 app.use(express.static("public"));
@@ -32,9 +31,6 @@ const hashPassword = async (plainTextPassword) => {
   const hash = await bcrypt.hash(plainTextPassword, saltRounds);
   return hash;
 };
-app.get('/', (req, res) => {
-  res.send('Welcome to the Crypto Metrics Backend API!');
-});
 
 app.post('/signup', async (req, res) => {
   const { username, password } = req.body;
@@ -86,7 +82,6 @@ app.get("/coin-list", async (req, res) => {
 
 app.get("/trending-coins", async (req, res) => {
   try {
-    console.log("here");
     const currency = "usd";
     const trendingCoinsURL = `${coingeckoBaseURL}/coins/markets?vs_currency=${currency}&order=gecko_desc&per_page=10&page=1&sparkline=false&price_change_percentage=24h`;
     console.log(trendingCoinsURL);
@@ -195,6 +190,6 @@ app.get("/favorites/:userId", async (req, res) => {
 });
 
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.listen(port, hostname, () => {
+  console.log(`Server is running at http://${hostname}:${port}`);
 });

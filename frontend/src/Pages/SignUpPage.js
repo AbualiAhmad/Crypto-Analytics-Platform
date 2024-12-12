@@ -50,11 +50,10 @@ const SignUp = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { user_id, setUserId } = CryptoState();
-  const API = "https://crypto-metrics-backend.onrender.com"
   const handleSignUp = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post(`${API}/signup`, { username, password });
+      const response = await axios.post('http://localhost:5000/signup', { username, password });
       console.log(response.data);
       localStorage.setItem('userId', response.data.id);
       setUserId(response.data.id);
@@ -63,7 +62,7 @@ const SignUp = () => {
       console.error(error);
     }
   };
-  
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />

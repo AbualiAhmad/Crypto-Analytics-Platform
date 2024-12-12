@@ -33,7 +33,7 @@ export default function Watchlist() {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
-  const API = "https://crypto-metrics-backend.onrender.com"
+
   const { currency, symbol } = CryptoState();
 
   const useStyles = makeStyles({
@@ -87,7 +87,7 @@ export default function Watchlist() {
     const fetchData = async () => {
       try {
         const userId = localStorage.getItem("userId");
-        const { data } = await axios.get(`${API}/favorites/${userId}`);
+        const { data } = await axios.get(`http://localhost:5000/favorites/${userId}`);
         const coinIds = data.map(favorite => favorite.coin_id);
         console.log(coinIds);
         setFavorites(coinIds);
@@ -132,9 +132,8 @@ export default function Watchlist() {
     try {
       // Retrieve user ID dynamically
       const user_id = localStorage.getItem("userId");
-      console.log("idheree"+user_id)
       const userId = localStorage.getItem("userId");
-      const {data} = await axios.get(`${API}/favorites/${userId}`);
+      const {data} = await axios.get(`http://localhost:5000/favorites/${userId}`);
       const coinIds = data.map(favorite => favorite.coin_id);
 
       // Determine if the coin is already favorited
@@ -147,14 +146,14 @@ export default function Watchlist() {
         setFavorites((prevFavorites) =>
           prevFavorites.filter((id) => id !== coinId)
         );
-        await axios.post(`${API}/remove-favorite`, {
+        await axios.post("http://localhost:5000/remove-favorite", {
           user_id: userId,
           coin_id: coinId,
         });
       } else {
         // Add to favorites
         setFavorites((prevFavorites) => [...prevFavorites, coinId]);
-        await axios.post(`${API}/add-favorite`, {
+        await axios.post("http://localhost:5000/add-favorite", {
           user_id: userId,
           coin_id: coinId,
         });

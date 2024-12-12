@@ -14,7 +14,6 @@ const PortfolioPage = () => {
   const [quantityInput, setQuantityInput] = useState('');
   const [priceInput, setPriceInput] = useState('');
   const [cryptoData, setCryptoData] = useState([]);
-  const API = "https://crypto-metrics-backend.onrender.com"
   let CurrentValue = 0;
   let CurrentSpent = 0;
   const coinPrices = {
@@ -43,8 +42,7 @@ const PortfolioPage = () => {
         console.log("User is not logged in.");
         return; // Exit the function if user_id is null or undefined
       }
-      console.log("idheree" + user_id)
-      const response = await axios.get(`${API}/transactions/${user_id}`);
+      const response = await axios.get(`http://localhost:5000/transactions/${user_id}`);
       setTransactions(response.data);
       updateCryptoData(response.data); // Update crypto data when transactions change
     } catch (error) {
@@ -59,7 +57,7 @@ const PortfolioPage = () => {
   };
   const handleBuyClick = async () => {
     try {
-      const response = await axios.post(`${API}/transactions`, {
+      const response = await axios.post('http://localhost:5000/transactions', {
         user_id: localStorage.getItem("userId"),
         id: idInput,
         transaction_type: 'BUY',
@@ -75,7 +73,7 @@ const PortfolioPage = () => {
 
   const handleSellClick = async () => {
     try {
-      const response = await axios.post(`${API}/transactions`, {
+      const response = await axios.post('http://localhost:5000/transactions', {
         user_id: localStorage.getItem("userId"),
         id: idInput,
         transaction_type: 'SELL',

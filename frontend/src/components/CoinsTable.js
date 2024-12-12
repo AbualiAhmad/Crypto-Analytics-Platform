@@ -28,7 +28,6 @@ export function numberWithCommas(x) {
 }
 
 const CoinDataCache = [{"id":"bitcoin","symbol":"btc","name":"Bitcoin","image":"https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1696501400","current_price":41779,"market_cap":816833510906,"market_cap_rank":1,"fully_diluted_valuation":876906849801,"total_volume":39566836953,"high_24h":42403,"low_24h":40672,"price_change_24h":1107.39,"price_change_percentage_24h":2.72276,"market_cap_change_24h":22661041901,"market_cap_change_percentage_24h":2.85342,"circulating_supply":19561375.0,"total_supply":21000000.0,"max_supply":21000000.0,"ath":69045,"ath_change_percentage":-39.52126,"ath_date":"2021-11-10T14:24:11.849Z","atl":67.81,"atl_change_percentage":61480.91653,"atl_date":"2013-07-06T00:00:00.000Z","roi":null,"last_updated":"2023-12-05T02:44:07.086Z"},{"id":"ethereum","symbol":"eth","name":"Ethereum","image":"https://assets.coingecko.com/coins/images/279/large/ethereum.png?1696501628","current_price":2230.59,"market_cap":268074983240,"market_cap_rank":2,"fully_diluted_valuation":268074983240,"total_volume":28899240241,"high_24h":2271.34,"low_24h":2208.31,"price_change_24h":17.15,"price_change_percentage_24h":0.77472,"market_cap_change_24h":2126957630,"market_cap_change_percentage_24h":0.79976,"circulating_supply":120233028.208889,"total_supply":120233028.208889,"max_supply":null,"ath":4878.26,"ath_change_percentage":-54.30591,"ath_date":"2021-11-10T14:24:19.604Z","atl":0.432979,"atl_change_percentage":514723.48357,"atl_date":"2015-10-20T00:00:00.000Z","roi":{"times":70.40679473504282,"currency":"btc","percentage":7040.679473504282},"last_updated":"2023-12-05T02:44:04.378Z"},{"id":"solana","symbol":"sol","name":"Solana","image":"https://assets.coingecko.com/coins/images/4128/large/solana.png?1696504756","current_price":60.19,"market_cap":25529162829,"market_cap_rank":6,"fully_diluted_valuation":33931424673,"total_volume":2234871496,"high_24h":65.14,"low_24h":59.96,"price_change_24h":-3.830949408693371,"price_change_percentage_24h":-5.98374,"market_cap_change_24h":-1621055741.6901398,"market_cap_change_percentage_24h":-5.97069,"circulating_supply":424351899.208649,"total_supply":564016321.229134,"max_supply":null,"ath":259.96,"ath_change_percentage":-76.85775,"ath_date":"2021-11-06T21:54:35.825Z","atl":0.500801,"atl_change_percentage":11912.8338,"atl_date":"2020-05-11T19:35:23.449Z","roi":null,"last_updated":"2023-12-05T02:44:00.212Z"}]
-const API = "https://crypto-metrics-backend.onrender.com"
 
 export default function CoinsTable() {
   const [coins, setCoins] = useState([]);
@@ -76,7 +75,7 @@ export default function CoinsTable() {
       return; // Exit the function if user_id is null or undefined
     }
     try {
-      const { data } = await axios.get(`${API}/favorites/${userId}`);
+      const { data } = await axios.get(`http://localhost:5000/favorites/${userId}`);
       const coinIds = data.map(favorite => favorite.coin_id);
       console.log(coinIds);
       setFavorites(coinIds);
@@ -119,9 +118,8 @@ export default function CoinsTable() {
     try {
       // Retrieve user ID dynamically
       const user_id = localStorage.getItem("userId");
-      console.log("idheree"+user_id)
       const userId = localStorage.getItem("userId");
-      const {data} = await axios.get(`${API}/favorites/${userId}`);
+      const {data} = await axios.get(`http://localhost:5000/favorites/${userId}`);
       const coinIds = data.map(favorite => favorite.coin_id);
 
       // Determine if the coin is already favorited
@@ -134,14 +132,14 @@ export default function CoinsTable() {
         setFavorites((prevFavorites) =>
           prevFavorites.filter((id) => id !== coinId)
         );
-        await axios.post(`${API}/remove-favorite`, {
+        await axios.post("http://localhost:5000/remove-favorite", {
           user_id: userId,
           coin_id: coinId,
         });
       } else {
         // Add to favorites
         setFavorites((prevFavorites) => [...prevFavorites, coinId]);
-        await axios.post(`${API}/add-favorite`, {
+        await axios.post("http://localhost:5000/add-favorite", {
           user_id: userId,
           coin_id: coinId,
         });
