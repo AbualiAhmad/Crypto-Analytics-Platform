@@ -1,0 +1,38 @@
+# Node modules
+node_modules/
+package-lock.json
+# Logs
+logs
+*.log
+
+# Environment files
+.env
+.env.local
+.env.*.local
+.env.development
+.env.test
+.env.production
+.env.local
+.env.staging
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn
+.yarn
+.yarn-integrity
+
+# Pnpm
+pnpm-lock.yaml
+
+# Mac files
+.DS_Store
+
+# Editor directories and files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
