@@ -49,9 +49,9 @@ The watchlist helps users monitor their favorite cryptocurrencies, providing up-
 ---
 
 ## Technologies Used
-- **Frontend:** React, Redux
+- **Frontend:** React
 - **Backend:** Node.js, Express
-- **Database:** MongoDB
+- **Database:** PostgreSQL
 - **APIs:** CoinGecko API for real-time cryptocurrency data
 
 Feel free to explore the platform and provide feedback to help us improve!
