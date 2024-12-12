@@ -1,4 +1,7 @@
-### `modify the env.json in backend`
+
+### `npm i -f`
+
+### `modify the .env file in backend`
 
 ### `npm run setup`
 
